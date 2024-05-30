@@ -10,20 +10,24 @@ const addToFavorites = (req, res) => {
             if (!product) {
                 return res.status(404).json({ success: false, message: 'Product not found' });
             }
+
+            // Attempt to add the product to the favorites list
             return Favorite.findOneAndUpdate(
                 { apiKey: apiKey },
-                { $addToSet: { products: productId } }, // $addToSet adds the item to the array only if it does not already exist
-                { new: true, upsert: true } // Upsert true will create a new document if it does not exist
+                { $addToSet: { products: productId } }, // $addToSet prevents duplicates
+                { new: true, upsert: true } // Create a new document if one doesn't exist
             );
         })
         .then(favorite => {
             if (!favorite) {
                 return res.status(500).json({ success: false, message: 'Unable to update favorites' });
             }
+
             if (favorite.products.includes(productId)) {
+                return res.status(201).json({ success: true, message: 'Product successfully added to favorites' });
+            } else {
                 return res.status(409).json({ success: false, message: 'Product already in favorites' });
             }
-            return res.status(201).json({ success: true, message: 'Product added to favorites' });
         })
         .catch(err => {
             console.error('Error updating favorites:', err);
@@ -38,7 +42,7 @@ const removeFavorite = (req, res) => {
     Favorite.findOne({ apiKey: apiKey })
         .then(favorite => {
             if (!favorite) {
-                return res.status(404).json({ success: false, message: 'Favorites not found' });
+                return res.status(404).json({ success: false, message: 'Favorite not found' });
             }
 
             // Remove the product from the favorites array
