@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
 
+const localUrl = "mongodb://localhost:27017/ecommerce"
+const mongoDBURL = process.env.mongoDBURL;
+
 const connection = async() => {
     try {
-        //mongodb://localhost:27017/ecommerce
-        //mongodb://mongo:dDsxUJevhDoQgOWUtVVchRbCZUbLZrqz@monorail.proxy.rlwy.net:56588
-        await mongoose.connect("mongodb://mongo:dDsxUJevhDoQgOWUtVVchRbCZUbLZrqz@monorail.proxy.rlwy.net:56588", {
+        await mongoose.connect(mongoDBURL, {
             dbName: "ecommerce"
         });
         console.log("Conexion a BBDD realizada");
