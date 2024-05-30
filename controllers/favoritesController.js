@@ -59,7 +59,7 @@ const removeFavorite = (req, res) => {
                 .catch(err => res.status(500).json({ success: false, message: 'Error updating favorites', error: err }));
         })
         .catch(err => {
-            res.status(500).json({ success: false, message: 'Error retrieving favorites', error: err });
+            return res.status(500).json({ success: false, message: 'Error retrieving favorites', error: err });
         });
 };
 
@@ -72,10 +72,10 @@ const getFavorites = (req, res) => {
             if (!favorite) {
                 return res.status(404).json({ success: false, message: 'No favorites found' });
             }
-            res.status(200).json({ success: true, favorites: favorite.products });
+            return res.status(200).json({ success: true, favorites: favorite.products });
         })
         .catch(err => {
-            res.status(500).json({ success: false, message: 'Error retrieving favorites', error: err });
+            return res.status(500).json({ success: false, message: 'Error retrieving favorites', error: err });
         });
 };
 

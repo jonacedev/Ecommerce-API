@@ -22,7 +22,13 @@ UserSchema.virtual('id').get(function() {
     return this._id.toHexString();
 });
 
-UserSchema.set('toJSON', { virtuals: true });
-UserSchema.set('toObject', { virtuals: true });
+UserSchema.set('toJSON', {
+    virtuals: true,
+    versionKey: false,
+    transform: function (doc, ret) {   // Transform document to return only necessary info
+        delete ret._id;
+        delete ret.apiKey;
+    }
+});
 
 module.exports = model("User", UserSchema, "users");

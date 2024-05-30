@@ -16,7 +16,13 @@ FavoriteSchema.virtual('id').get(function() {
     return this._id.toHexString();
 });
 
-FavoriteSchema.set('toJSON', { virtuals: true });
-FavoriteSchema.set('toObject', { virtuals: true });
+FavoriteSchema.set('toJSON', {
+    virtuals: true,
+    versionKey: false,
+    transform: function (doc, ret) {   // Transform document to return only necessary info
+        delete ret._id;
+        delete ret.apiKey;
+    }
+});
 
 module.exports = mongoose.model("Favorite", FavoriteSchema, "favorites");
