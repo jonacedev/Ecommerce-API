@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const localUrl = "mongodb://localhost:27017/ecommerce"
-const mongoDBURL = process.env.mongoDBURL;
+const mongoDBURL = process.env.DATABASE_URL;
 
 const connection = async() => {
     try {
