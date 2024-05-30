@@ -8,7 +8,7 @@ const getDefaultUser = (req, res) => {
         return res.status(400).json({ success: false, message: "API key is required" });
     }
 
-    User.findOne({ apiKey: apiKey })
+    User.findOne({ apiKey: apiKey }, '-apiKey')
         .then(user => {
             if (!user) {
                 return res.status(404).json({ success: false, message: "User not found" });
