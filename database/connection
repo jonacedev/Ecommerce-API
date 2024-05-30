@@ -3,9 +3,8 @@ const mongoose = require("mongoose");
 const connection = async() => {
     try {
         //mongodb://localhost:27017/ecommerce
-        // mongodb://mongo:IVGSEyKYwsmmEQmtIBTGlXUiIehWChGD@roundhouse.proxy.rlwy.net:14633/hovi
-
-        await mongoose.connect("mongodb://localhost:27017/ecommerce", {
+        //mongodb://mongo:dDsxUJevhDoQgOWUtVVchRbCZUbLZrqz@monorail.proxy.rlwy.net:56588
+        await mongoose.connect("mongodb://mongo:dDsxUJevhDoQgOWUtVVchRbCZUbLZrqz@monorail.proxy.rlwy.net:56588", {
             dbName: "ecommerce"
         });
         console.log("Conexion a BBDD realizada");
