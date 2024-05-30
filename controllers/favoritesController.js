@@ -11,27 +11,37 @@ const addFavorite = (req, res) => {
                 return res.status(404).json({ success: false, message: 'Product not found' });
             }
 
-            // Attempt to add the product to the favorites list
-            return Favorite.findOneAndUpdate(
-                { apiKey: apiKey },
-                { $addToSet: { products: productId } }, // $addToSet prevents duplicates
-                { new: true, upsert: true } // Create a new document if one doesn't exist
-            );
-        })
-        .then(favorite => {
-            if (!favorite) {
-                return res.status(500).json({ success: false, message: 'Unable to update favorites' });
-            }
-
-            if (favorite.products.includes(productId)) {
-                return res.status(201).json({ success: true, message: 'Product successfully added to favorites' });
-            } else {
-                return res.status(409).json({ success: false, message: 'Product already in favorites' });
-            }
+            // First check if the product is already in the favorites
+            Favorite.findOne({ apiKey: apiKey })
+                .then(favorite => {
+                    if (favorite && favorite.products.includes(productId)) {
+                        return res.status(409).json({ success: false, message: 'Product already in favorites' });
+                    } else {
+                        return Favorite.findOneAndUpdate(
+                            { apiKey: apiKey },
+                            { $addToSet: { products: productId } },
+                            { new: true, upsert: true }
+                        )
+                        .then(updatedFavorite => {
+                            if (!updatedFavorite) {
+                                return res.status(500).json({ success: false, message: 'Unable to update favorites' });
+                            }
+                            return res.status(201).json({ success: true, message: 'Product successfully added to favorites' });
+                        })
+                        .catch(err => {
+                            console.error('Error updating favorites:', err);
+                            return res.status(500).json({ success: false, message: 'Error saving favorites', error: err });
+                        });
+                    }
+                })
+                .catch(err => {
+                    console.error('Error finding favorites:', err);
+                    return res.status(500).json({ success: false, message: 'Error retrieving favorites', error: err });
+                });
         })
         .catch(err => {
-            console.error('Error updating favorites:', err);
-            return res.status(500).json({ success: false, message: 'Error saving favorites', error: err });
+            console.error('Error finding product:', err);
+            return res.status(500).json({ success: false, message: 'Error finding product', error: err });
         });
 };
 
