@@ -1,7 +1,7 @@
 const Favorite = require('../models/favorite');
 const Product = require('../models/product');
 
-const addToFavorites = (req, res) => {
+const addFavorite = (req, res) => {
     const apiKey = req.user.apiKey;
     const productId = req.params.productId;
 
@@ -80,7 +80,7 @@ const getFavorites = (req, res) => {
 };
 
 module.exports = {
-    addToFavorites,
+    addFavorite,
     removeFavorite,
     getFavorites
 };
