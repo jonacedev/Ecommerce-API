@@ -24,11 +24,13 @@ app.use(express.urlencoded({extended: true}));
 
 //Cargar conf rutas
 
-const productRoutes = require('./routes/products');
-const favoriteRoutes = require('./routes/favorites');
+const productsRoutes = require('./routes/products');
+const favoritesRoutes = require('./routes/favorites');
+const usersRoutes = require('./routes/users');
 
-app.use('/api/products', productRoutes);
-app.use('/api/favorites', favoriteRoutes);
+app.use('/api/products', productsRoutes);
+app.use('/api/favorites', favoritesRoutes);
+app.use('/api/users', usersRoutes);
 
 
 //Poner servidor a escuchar peticiones http
