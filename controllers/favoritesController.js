@@ -21,9 +21,9 @@ const addToFavorites = (req, res) => {
                 return res.status(500).json({ success: false, message: 'Unable to update favorites' });
             }
             if (favorite.products.includes(productId)) {
-                return res.status(201).json({ success: true, message: 'Product added to favorites' });
+                return res.status(409).json({ success: false, message: 'Product already in favorites' });
             }
-            return res.status(409).json({ success: false, message: 'Product already in favorites' });
+            return res.status(201).json({ success: true, message: 'Product added to favorites' });
         })
         .catch(err => {
             console.error('Error updating favorites:', err);
