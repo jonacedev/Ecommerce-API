@@ -1,5 +1,5 @@
 
-const secret = "API_KEY_ECOMMERCE_APP_98798";
+const secretAPIKey = process.env.SECRET_APIKEY;
 
 function auth(req, res, next) {
 
@@ -8,8 +8,8 @@ function auth(req, res, next) {
       return res.status(401).json({ error: 'API key is required' });
     }
 
-    if(apiKey === secret) {
-        req.user = { apiKey };  // Attach the API key to the request object
+    if(apiKey === secretAPIKey) {
+        req.user = { apiKey }; 
         next();
     } else {
         return res.status(401).json({ error: 'Unauthorized: Invalid API key' });
