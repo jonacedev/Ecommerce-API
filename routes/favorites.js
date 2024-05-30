@@ -6,7 +6,7 @@ const middleware = require("../middleware/apiKey");
 // Definir rutas
 
 router.post('/addFavorite/:productId', middleware, FavoritesController.addFavorite);
-router.delete('/removeFavorite/:productId', FavoritesController.removeFavorite);
+router.delete('/removeFavorite/:productId', middleware, FavoritesController.removeFavorite);
 router.get('/getFavorites', middleware, FavoritesController.getFavorites);
 
 // Exportar
