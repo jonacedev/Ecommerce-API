@@ -36,7 +36,13 @@ ProductSchema.virtual('id').get(function() {
     return this._id.toHexString();
 });
 
-ProductSchema.set('toJSON', { virtuals: true });
-ProductSchema.set('toObject', { virtuals: true });
+ProductSchema.set('toJSON', {
+    virtuals: true,
+    versionKey: false,
+    transform: function (doc, ret) {
+        ret.id = ret._id.toHexString();
+        delete ret._id;
+    }
+});
 
 module.exports = model("Product", ProductSchema, "products");

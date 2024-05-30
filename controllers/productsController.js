@@ -2,21 +2,10 @@
 const Product = require('../models/product');
 
 const getList = (req, res) => {
-    Product.find().select('title subtitle description rating reviews price image _id').then((products) => {
-        const transformedProducts = products.map(product => ({
-            id: product._id,
-            title: product.title,
-            subtitle: product.subtitle,
-            description: product.description,
-            rating: product.rating,
-            reviews: product.reviews,
-            price: product.price,
-            image: product.image
-        }));
-
+    Product.find().select('title subtitle description rating reviews price image').then((products) => {
         return res.status(200).json({
             success: true,
-            products: transformedProducts
+            products: products
         });
     })
     .catch((err) => {
@@ -38,7 +27,6 @@ const addProduct = (req, res) => {
         image: req.body.image
     });
 
-    // Save the product to the database
     newProduct.save()
         .then(product => {
             return res.status(201).json({

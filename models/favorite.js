@@ -19,9 +19,9 @@ FavoriteSchema.virtual('id').get(function() {
 FavoriteSchema.set('toJSON', {
     virtuals: true,
     versionKey: false,
-    transform: function (doc, ret) {   // Transform document to return only necessary info
-        delete ret._id;
-        delete ret.apiKey;
+    transform: function (doc, ret) {
+        ret.id = ret._id.toHexString();
+        delete ret._id;  // Delete the original '_id'
     }
 });
 

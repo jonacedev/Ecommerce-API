@@ -25,7 +25,8 @@ UserSchema.virtual('id').get(function() {
 UserSchema.set('toJSON', {
     virtuals: true,
     versionKey: false,
-    transform: function (doc, ret) {   // Transform document to return only necessary info
+    transform: function (doc, ret) { 
+        ret.id = ret._id.toHexString();
         delete ret._id;
         delete ret.apiKey;
     }
