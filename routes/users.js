@@ -5,7 +5,7 @@ const middleware = require("../middleware/apiKey");
 
 // Definir rutas
 
-router.get("/getDefaultUserInfo", middleware, UsersController.getDefaultUserInfo);
+router.get("/getDefaultUser", middleware, UsersController.getDefaultUser);
 
 // Exportar
 
